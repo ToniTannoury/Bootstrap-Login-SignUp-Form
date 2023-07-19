@@ -7,16 +7,16 @@ header("Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type
 
 $response = array();
 
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $json_data = file_get_contents('php://input');
   $data = json_decode($json_data, true);
+
   if (
     isset($data['username']) &&
     isset($data['password']) &&
     isset($data['email']) &&
     isset($data['phone'])
-    ) {
+  ) {
     $username = $data['username'];
     $password = $data['password'];
     $email = $data['email'];
@@ -39,28 +39,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $check_phone->execute();
     $check_phone->store_result();
     $phone_exists = $check_phone->num_rows();
-      if ($username_exists === 0 && $email_exists === 0 && $phone_exists === 0) {
-        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
-        $query = $mysqli->prepare('INSERT INTO users (username, password, phone, email) VALUES (?, ?, ?, ?)');
-        $query->bind_param('ssss', $username, $hashed_password, $phone, $email);
-        if ($query->execute()) {
-          $response['status'] = 'success';
-          $response['data'] = [$username=>$username , $phone=>$phone, $email=>$email];
-        } else {
-          $response['status'] = 'failed';
-          $response['error'] = 'Error executing query: ' . $mysqli->error;
-        }
-      }else {
-          $response['status'] = 'failed';
-          $response['error'] = 'Username, email, or phone already exists.';
-        }
-  }else {
+    if ($username_exists === 0 && $email_exists === 0 && $phone_exists === 0) {
+      $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+      $query = $mysqli->prepare('INSERT INTO users (username, password, phone, email) VALUES (?, ?, ?, ?)');
+      $query->bind_param('ssss', $username, $hashed_password, $phone, $email);
+      if ($query->execute()) {
+        $response['status'] = 'success';
+        $response['data'] = [$username=>$username , $phone=>$phone, $email=>$email];
+      } else {
+        $response['status'] = 'failed';
+        $response['error'] = 'Error executing query: ' . $mysqli->error;
+      }
+    } else {
       $response['status'] = 'failed';
-      $response['error'] = 'Missing required fields.';
+      $response['error'] = 'Username, email, or phone already exists.';
     }
-
-}else {
+  } else {
+    $response['status'] = 'failed';
+    $response['error'] = 'Missing required fields.';
+  }
+} else {
   $response['status'] = 'failed';
   $response['error'] = 'Invalid request method.';
 }
+
+echo json_encode($response);
+?>
