@@ -17,6 +17,17 @@ if ($json_data) {
     if ($query->num_rows() === 1) {
       $query->bind_result($id, $username, $hashedpassword, $email, $phone);
       $query->fetch();
+      if (password_verify($password, $hashedpassword)) {
+        $response = array(
+          'status' => 'logged in',
+          'user_id' => $id,
+          'username' => $username,
+          'phone' => $phone,
+          'email' => $email
+        );
+      } else {
+        $response = array('status' => 'wrong password');
+      }
     } else {
       $response = array('status' => 'user not found');
     }
