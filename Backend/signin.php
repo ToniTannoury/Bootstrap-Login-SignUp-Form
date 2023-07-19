@@ -37,3 +37,5 @@ if ($json_data) {
 } else {
   $response = array('status' => 'failed', 'error' => 'Invalid request body');
 }
+
+echo json_encode($response);
