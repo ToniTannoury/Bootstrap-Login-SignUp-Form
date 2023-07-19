@@ -14,6 +14,12 @@ if ($json_data) {
     $query->bind_param('s', $email);
     $query->execute();
     $query->store_result();
+    if ($query->num_rows() === 1) {
+      $query->bind_result($id, $username, $hashedpassword, $email, $phone);
+      $query->fetch();
+    } else {
+      $response = array('status' => 'user not found');
+    }
   } else {
     $response = array('status' => 'email and password not provided');
   }
