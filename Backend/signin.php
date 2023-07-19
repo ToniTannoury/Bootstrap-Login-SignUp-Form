@@ -10,6 +10,10 @@ if ($json_data) {
   if (isset($data['email']) && isset($data['password'])) {
     $email = $data['email'];
     $password = $data['password'];
+    $query = $mysqli->prepare('SELECT id, username, password, email, phone FROM users WHERE email = ?');
+    $query->bind_param('s', $email);
+    $query->execute();
+    $query->store_result();
   } else {
     $response = array('status' => 'email and password not provided');
   }
