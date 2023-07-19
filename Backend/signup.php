@@ -44,7 +44,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $query = $mysqli->prepare('INSERT INTO users (username, password, phone, email) VALUES (?, ?, ?, ?)');
         $query->bind_param('ssss', $username, $hashed_password, $phone, $email);
-        
+        if ($query->execute()) {
+          $response['status'] = 'success';
+          $response['data'] = [$username=>$username , $phone=>$phone, $email=>$email];
+        } else {
+          $response['status'] = 'failed';
+          $response['error'] = 'Error executing query: ' . $mysqli->error;
+        }
       }else {
           $response['status'] = 'failed';
           $response['error'] = 'Username, email, or phone already exists.';
