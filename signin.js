@@ -23,7 +23,7 @@ window.onload = function() {
       password
     };
 
-    const url = 'http://localhost/SignUpLogin/signin.php';
+    const url = 'http://localhost/SignUpLogin/Backend/signin.php';
     const body = JSON.stringify(loginInput);
 
     fetch(url, {

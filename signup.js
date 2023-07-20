@@ -19,4 +19,27 @@ if (!regUserName || !regEmail || !regPhone || !regConfirm || !regPass) {
   return;
 }
 
+const signUpInput = {
+  username: regUserName,
+  password: regPass,
+  phone: regPhone,
+  email: regEmail,
+};
+const url = 'http://localhost/SignUpLogin/Backend/signup.php';
+  const body = JSON.stringify(signUpInput);
+  console.log(body)
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: body
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+  })
+  .catch(error => {
+    console.log(error);
+  }); 
 }
