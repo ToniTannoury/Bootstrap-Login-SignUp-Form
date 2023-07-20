@@ -38,6 +38,13 @@ const url = 'http://localhost/SignUpLogin/Backend/signup.php';
   .then(response => response.json())
   .then(data => {
     console.log(data);
+    if(data.status !== 'success'){
+      document.getElementById("errorDiv").classList.remove('d-none');
+      document.getElementById("errorDiv").textContent = data.error;
+      setTimeout(()=>{
+        document.getElementById("errorDiv").classList.add('d-none');
+      },3000)
+    }
   })
   .catch(error => {
     console.log(error);
