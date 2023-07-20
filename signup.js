@@ -36,7 +36,7 @@ if (!regUserName || !regEmail || !regPhone || !regConfirm || !regPass) {
   };
 
   console.log(signUpInput);
-  const url = 'http://localhost/SignUpLogin/signup.php';
+  const url = 'http://localhost/SignUpLogin/Backend/signup.php';
   const body = JSON.stringify(signUpInput);
   console.log(body)
   fetch(url, {

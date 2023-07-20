@@ -44,6 +44,8 @@ window.onload = function() {
         return
       }
       console.log(data.status);
+      localStorage.setItem('responseData', JSON.stringify(data));
+      window.location.href = 'dashboard.html';
     })
     .catch(error => {
       console.log(error);
