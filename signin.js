@@ -35,7 +35,15 @@ window.onload = function() {
     })
     .then(response => response.json())
     .then(data => {
-      console.log(data)
+      if(data.status !== 'logged in'){
+        document.getElementById("errorDiv").classList.remove('d-none');
+        document.getElementById("errorDiv").textContent = data.status;
+        setTimeout(()=>{
+          document.getElementById("errorDiv").classList.add('d-none');
+        },3000)
+        return
+      }
+      console.log(data.status);
     })
     .catch(error => {
       console.log(error);
