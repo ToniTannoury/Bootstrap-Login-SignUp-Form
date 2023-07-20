@@ -3,12 +3,15 @@ window.onload = function() {
   const parsedData = JSON.parse(storedData);
 
   const dataText = document.getElementById('dataText');
-
-  for (let key in parsedData) {
-    if (parsedData.hasOwnProperty(key)) {
-      const userInfo = document.createElement('p');
-      userInfo.textContent = `${key} : ${parsedData[key]}`;
-      dataText.appendChild(userInfo);
+  console.log(parsedData)
+    if(parsedData.data){
+      console.log(parsedData.data.username)
+      dataText.textContent =`Welcome ${parsedData.data.username}`
+    }else{
+      for (let key in parsedData) {
+        if (parsedData.hasOwnProperty(key)) {
+          dataText.textContent =`Welcome ${parsedData.username}`
+        }
+      }
     }
-  }
 };

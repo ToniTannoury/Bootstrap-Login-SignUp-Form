@@ -48,4 +48,4 @@ if ($json_data) {
 }
 
 echo json_encode($response);
-
+?>
