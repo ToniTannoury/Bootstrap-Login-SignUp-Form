@@ -22,17 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $data['email'];
     $phone = $data['phone'];
 
-    // Validate username length (at least 6 characters)
     if (strlen($username) < 6) {
       $response['status'] = 'failed';
       $response['error'] = 'Username should be at least 6 characters long.';
     } else {
-      // Validate password length (at least 6 characters)
       if (strlen($password) < 6) {
         $response['status'] = 'failed';
         $response['error'] = 'Password should be at least 6 characters long.';
       } else {
-        // Validate email format
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
           $response['status'] = 'failed';
           $response['error'] = 'Invalid email format.';
